@@ -12,7 +12,7 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
-license = { file = "LICENSE" }
+license = {text = "MIT License"}
 keywords = [
     'large language model',
     'vision language model',
