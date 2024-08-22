@@ -1,7 +1,7 @@
 [project]
 name = "qwen-vl-utils"
 version = "0.1.0"
-description = "Add your description here"
+description = "Qwen Vision Language Model Utils - PyTorch"
 authors = [
     { name = "Qwen Team", email = "chenkeqin.ckq@alibaba-inc.com" },
 ]
@@ -12,6 +12,19 @@ dependencies = [
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
+license = { file = "LICENSE" }
+keywords = [
+    'large language model',
+    'vision language model',
+    'qwen-vl',
+    'pytorch',
+]
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Programming Language :: Python :: 3',
+    'License :: OSI Approved :: MIT License',
+]
 
 [build-system]
 requires = ["hatchling"]
