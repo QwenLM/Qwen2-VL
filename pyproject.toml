@@ -5,7 +5,11 @@ description = "Add your description here"
 authors = [
     { name = "Qwen Team", email = "chenkeqin.ckq@alibaba-inc.com" },
 ]
-dependencies = []
+dependencies = [
+    "torch>=2.0",
+    "torchvision>=0.15.0",
+    "requests>=2.0",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 
