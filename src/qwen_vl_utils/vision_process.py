@@ -1,13 +1,25 @@
+from __future__ import annotations
+
 import base64
 import math
 from io import BytesIO
-from typing import Dict
 
 import requests
 import torch
 from PIL import Image
 from torchvision import io, transforms
 from torchvision.transforms import InterpolationMode
+
+
+IMAGE_FACTOR = 28
+MIN_PIXELS = 4 * 28 * 28
+MAX_PIXELS = 16384 * 28 * 28
+MAX_RATIO = 200
+
+FRAME_FACTOR = 2
+FPS = 2.0
+FPS_MIN_FRAMES = 4
+FPS_MAX_FRAMES = 1024
 
 
 def round_by_factor(number: int, factor: int) -> int:
@@ -26,8 +38,8 @@ def floor_by_factor(number: int, factor: int) -> int:
 
 
 def smart_resize(
-    height: int, width: int, factor: int = 28, min_pixels: int = 56 * 56, max_pixels: int = 14 * 14 * 4 * 1280
-):
+    height: int, width: int, factor: int = IMAGE_FACTOR, min_pixels: int = MIN_PIXELS, max_pixels: int = MAX_PIXELS
+) -> tuple[int, int]:
     """
     Rescales the image so that the following conditions are met:
 
@@ -37,9 +49,9 @@ def smart_resize(
 
     3. The aspect ratio of the image is maintained as closely as possible.
     """
-    if max(height, width) / min(height, width) > 200:
+    if max(height, width) / min(height, width) > MAX_RATIO:
         raise ValueError(
-            f"absolute aspect ratio must be smaller than {200}, got {max(height, width) / min(height, width)}"
+            f"absolute aspect ratio must be smaller than {MAX_RATIO}, got {max(height, width) / min(height, width)}"
         )
     h_bar = max(factor, round_by_factor(height, factor))
     w_bar = max(factor, round_by_factor(width, factor))
@@ -54,7 +66,7 @@ def smart_resize(
     return h_bar, w_bar
 
 
-def fetch_image(ele: Dict, size_factor=28) -> torch.Tensor:
+def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACTOR) -> Image.Image:
     if "image" in ele:
         image = ele["image"]
     else:
@@ -74,14 +86,9 @@ def fetch_image(ele: Dict, size_factor=28) -> torch.Tensor:
     else:
         image_obj = Image.open(image)
     if image_obj is None:
-        raise ValueError(
-            "Unrecognized image input, support local path, http url, base64 and " "PIL.Image, got {image}"
-        )
+        raise ValueError(f"Unrecognized image input, support local path, http url, base64 and PIL.Image, got {image}")
     image = image_obj.convert("RGB")
     ## resize
-    width, height = image.size
-    min_pixels = ele.get("min_pixels", 56 * 56)
-    max_pixels = ele.get("max_pixels", 5120 * 28 * 28)
     if "resized_height" in ele and "resized_width" in ele:
         resized_height, resized_width = smart_resize(
             ele["resized_height"],
@@ -89,6 +96,9 @@ def fetch_image(ele: Dict, size_factor=28) -> torch.Tensor:
             factor=size_factor,
         )
     else:
+        width, height = image.size
+        min_pixels = ele.get("min_pixels", MIN_PIXELS)
+        max_pixels = ele.get("max_pixels", MAX_PIXELS)
         resized_height, resized_width = smart_resize(
             height,
             width,
@@ -101,7 +111,7 @@ def fetch_image(ele: Dict, size_factor=28) -> torch.Tensor:
     return image
 
 
-def fetch_video(ele: Dict, size_factor=2) -> torch.Tensor:
+def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | list[Image.Image]:
     if isinstance(ele["video"], str):
         # TODO: support http url
         video, audio, info = io.read_video(
@@ -116,18 +126,19 @@ def fetch_video(ele: Dict, size_factor=2) -> torch.Tensor:
         if "nframes" in ele:
             nframes = round_by_factor(ele["nframes"], size_factor)
         else:
-            fps = ele.get("fps", 2.0)
-            nframes = round_by_factor(video.size(0) / info["video_fps"] * fps, size_factor)
-            min_frames = ele.get("min_frames", 4)
-            max_frames = ele.get("max_frames", 1024)
+            fps = ele.get("fps", FPS)
+            nframes = video.size(0) / info["video_fps"] * fps
+            min_frames = ele.get("min_frames", FPS_MIN_FRAMES)
+            max_frames = ele.get("max_frames", FPS_MAX_FRAMES)
             nframes = max(min(nframes, max_frames), min_frames)
+            nframes = round_by_factor(nframes, size_factor)
 
         idx = torch.linspace(0, video.size(0) - 1, nframes).round().long()
         height, width = video.shape[2:]
         video = video[idx]
 
-        min_pixels = ele.get("min_pixels", 56 * 56)
-        max_pixels = ele.get("max_pixels", 16384 * 28 * 28)
+        min_pixels = ele.get("min_pixels", MIN_PIXELS)
+        max_pixels = ele.get("max_pixels", MAX_PIXELS)
         if "resized_height" in ele and "resized_width" in ele:
             resized_height, resized_width = smart_resize(
                 ele["resized_height"],
@@ -155,14 +166,15 @@ def fetch_video(ele: Dict, size_factor=2) -> torch.Tensor:
         process_info.pop("type", None)
         process_info.pop("video", None)
         images = [fetch_image({"image": video_element, **process_info}) for video_element in ele["video"]]
-        if len(images) % 2 == 1:
-            images.append(images[-1])
+        nframes = ceil_by_factor(len(images), size_factor)
+        if len(images) < nframes:
+            images.extend([images[-1]] * (nframes - len(images)))
         return images
 
 
-def extract_vision_info(conversations):
+def extract_vision_info(conversations: list[dict] | list[list[dict]]) -> list[dict]:
     vision_infos = []
-    if isinstance(conversations[0], Dict):
+    if isinstance(conversations[0], dict):
         conversations = [conversations]
     for conversation in conversations:
         for message in conversation:
@@ -178,7 +190,9 @@ def extract_vision_info(conversations):
     return vision_infos
 
 
-def process_vision_info(conversations):
+def process_vision_info(
+    conversations: list[dict] | list[list[dict]],
+) -> tuple[list[Image.Image] | None, list[torch.Tensor | list[Image.Image]] | None]:
     vision_infos = extract_vision_info(conversations)
     ## Read images or videos
     image_inputs = []
