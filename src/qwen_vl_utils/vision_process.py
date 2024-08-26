@@ -114,8 +114,13 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
 def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | list[Image.Image]:
     if isinstance(ele["video"], str):
         # TODO: support http url
+
+        video = ele["video"]
+        if video.startswith("file://"):
+            video = video[7:]
+
         video, audio, info = io.read_video(
-            ele["video"],
+            video,
             start_pts=ele.get("video_start", 0.0),
             end_pts=ele.get("video_end", None),
             pts_unit="sec",
