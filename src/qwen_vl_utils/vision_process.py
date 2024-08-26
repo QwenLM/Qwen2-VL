@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import math
+import warnings
 from io import BytesIO
 
 import requests
@@ -133,10 +134,28 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
         else:
             fps = ele.get("fps", FPS)
             nframes = video.size(0) / info["video_fps"] * fps
-            min_frames = ele.get("min_frames", FPS_MIN_FRAMES)
-            max_frames = ele.get("max_frames", FPS_MAX_FRAMES)
-            nframes = max(min(nframes, max_frames), min_frames)
             nframes = round_by_factor(nframes, size_factor)
+            if "min_frames" in ele:
+                min_frames = ele["min_frames"]
+                if nframes < min_frames:
+                    nframes = ceil_by_factor(min_frames, size_factor)
+            else:
+                min_frames = FPS_MIN_FRAMES
+                if nframes < min_frames:
+                    warnings.warn(f"nframes is less than DEFAULT_MIN_FRAMES {min_frames}, set to {nframes}.")
+                    nframes = ceil_by_factor(min_frames, size_factor)
+            if "max_frames" in ele:
+                max_frames = ele["max_frames"]
+                if nframes > max_frames:
+                    nframes = floor_by_factor(max_frames, size_factor)
+            else:
+                max_frames = FPS_MAX_FRAMES
+                if nframes > max_frames:
+                    warnings.warn(f"nframes is greater than DEFAULT_MAX_FRAMES {max_frames}, set to {nframes}.")
+                    nframes = floor_by_factor(max_frames, size_factor)
+
+        if not (size_factor <= nframes and nframes <= video.size(0)):
+            raise ValueError(f"nframes should in interval [{size_factor}, {video.size(0)}], but got {nframes}.")
 
         idx = torch.linspace(0, video.size(0) - 1, nframes).round().long()
         height, width = video.shape[2:]
