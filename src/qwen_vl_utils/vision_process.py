@@ -20,7 +20,7 @@ MAX_RATIO = 200
 FRAME_FACTOR = 2
 FPS = 2.0
 FPS_MIN_FRAMES = 4
-FPS_MAX_FRAMES = 1024
+FPS_MAX_FRAMES = 768
 
 
 def round_by_factor(number: int, factor: int) -> int:
