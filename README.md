@@ -17,6 +17,7 @@ from qwen_vl_utils import process_vision_info
 
 # You can directly insert a local file path, a URL, or a base64-encoded image into the position where you want in the text.
 messages = [
+    # Image
     ## Local file path
     [{"role": "user", "content": [{"type": "image", "image": "file:///path/to/your/image.jpg"}, {"type": "text", "text": "Describe this image."}]}],
     ## Image URL
@@ -27,6 +28,13 @@ messages = [
     [{"role": "user", "content": [{"type": "image", "image": pil_image}, {"type": "text", "text": "Describe this image."}]}],
     ## Model dynamically adjusts image size, specify dimensions if required.
     [{"role": "user", "content": [{"type": "image", "image": "file:///path/to/your/image.jpg", "resized_height": 280, "resized_width": 420}, {"type": "text", "text": "Describe this image."}]}],
+    # Video
+    ## Local video path
+    [{"role": "user", "content": [{"type": "video", "video": "file:///path/to/your/image.jpg"}, {"type": "text", "text": "Describe this video."}]}],
+    ## Local video frames
+    [{"role": "user", "content": [{"type": "video", "video": ["file:///path/to/extracted_frame1.jpg", "file:///path/to/extracted_frame2.jpg", "file:///path/to/extracted_frame3.jpg"],}, {"type": "text", "text": "Describe this video."},],}],
+    ## Model dynamically adjusts video nframes, video height and width. specify args if required.
+    [{"role": "user", "content": [{"type": "video", "video": "file:///path/to/your/image.jpg", "fps": 2.0, "resized_height": 280, "resized_width": 280}, {"type": "text", "text": "Describe this video."}]}],
 ]
 
 processor = Qwen2VLProcessor.from_pretrained(model_path)
