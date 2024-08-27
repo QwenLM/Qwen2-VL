@@ -30,16 +30,15 @@ networkx==3.2.1
 numpy==1.24.1
     # via torchvision
 pillow==10.2.0
+    # via qwen-vl-utils
     # via torchvision
 requests==2.28.1
     # via qwen-vl-utils
 sympy==1.12
     # via torch
 torch==2.4.0
-    # via qwen-vl-utils
     # via torchvision
 torchvision==0.19.0
-    # via qwen-vl-utils
 typing-extensions==4.9.0
     # via torch
 urllib3==1.26.13

@@ -1,14 +1,13 @@
 [project]
 name = "qwen-vl-utils"
-version = "0.0.1"
+version = "0.0.2"
 description = "Qwen Vision Language Model Utils - PyTorch"
 authors = [
     { name = "Qwen Team", email = "chenkeqin.ckq@alibaba-inc.com" },
 ]
 dependencies = [
-    "torch>=2.0",
-    "torchvision>=0.15.0",
-    "requests>=2.0",
+    "requests",
+    "pillow",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -32,7 +31,10 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "torch",
+    "torchvision",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true
