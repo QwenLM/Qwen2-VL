@@ -84,17 +84,15 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 |   General  | FnCall<sup>[1]</sup> | TM | - | 90.2 | **93.1** |
 |     |  | EM | - | 50.0 | **53.2** |
 |   Game  | Number Line | SR | 89.4<sup>[2]</sup> | 91.5 | **100.0** |
-|     | BlackJack | SR | 40.5<sup>[2]</sup> | 34.5 | **42.6** |
+|     | BlackJack | SR | 40.2<sup>[2]</sup> | 34.5 | **42.6** |
 |     | EZPoint | SR | 50.0<sup>[2]</sup> | 85.5 | **100.0** |
 |     | Point24 | SR | 2.6<sup>[2]</sup> | 3.0 | **4.5** |
-| Android | AITZ<sub>test</sub>  | TM | 83.0<sup>[3]</sup> | 70.0 | **89.6** |
+| Android | AITZ  | TM | 83.0<sup>[3]</sup> | 70.0 | **89.6** |
 |     |  | EM | 47.7<sup>[3]</sup> | 35.3 | **72.1** |
-|     | GUI Odyssey | EM | 74.2<sup>[4]</sup> | 20.4 | 43.8 |
 | AI2THOR | ALFRED<sub>valid-unseen</sub> | SR | 67.7<sup>[4]</sup> | - | **67.8** |
-|     |  | GC | 75.3<sup>[5]</sup> | - | **75.8** | 
-|  VLN   | R2R  | GC | **79.0** | 43.7<sup>[6]</sup> | 51.7 | 
-|     | REVERIE | GC | **61.0** | 38.8<sup>[6]</sup> | 31.0 | 
-|     | R4R  | GC | **61.8** |  | 36.4 | 
+|     |  | GC | 75.3<sup>[4]</sup> | - | **75.8** | 
+|  VLN   | R2R<sub>valid-unseen</sub>  | SR | **79.0** | 43.7<sup>[5]</sup> | 51.7 | 
+|     | REVERIE<sub>valid-unseen</sub> | SR | **61.0** | 31.6<sup>[5]</sup> | 31.0 | 
 
 SR, GC, TM and EM are short for success rate, goal-condition success, type match and exact match.
 1. Self-Curated Function Call Benchmark by Qwen Team
@@ -108,7 +106,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
 <table style="width:75%;">
     <tr>
         <th>Models</th>
-        <td>Open-Source</td>
         <td>AR</td>
         <td>DE</td>
         <td>FR</td>
@@ -122,7 +119,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">Qwen2-VL-72B</th>
-        <td align="middle">✅ Coming soon</td>
         <td>20.7 </td>
         <td>36.5 </td>
         <td>44.1 </td>
@@ -136,7 +132,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">GPT-4o</th>
-        <td align="middle">✘</td>
         <td>20.2 </td>
         <td>34.2 </td>
         <td>41.2 </td>
@@ -150,7 +145,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
         <tr>
         <th align="left">Claude3 Opus</th>
-        <td align="middle">✘</td>
         <td>15.1 </td>
         <td>33.4 </td>
         <td>40.6 </td>
@@ -164,7 +158,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">Gemini Ultra</th>
-        <td align="middle">✘</td>
         <td>14.7 </td>
         <td>32.3 </td>
         <td>40.0 </td>
@@ -175,20 +168,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
         <td>20.3 </td>
         <td>28.6 </td>
         <td>23.2</td>
-    </tr>
-        <tr>
-        <th align="left">Qwen-VL-Max-0201</th>
-        <td align="middle">✘</td>
-        <td>7.7 </td>
-        <td>31.4 </td>
-        <td>37.6 </td>
-        <td>30.2 </td>
-        <td>18.6 </td>
-        <td>25.4 </td>
-        <td>10.4 </td>
-        <td>4.8 </td>
-        <td>23.5 </td>
-        <td>21.1  </td>
     </tr>
 </table>
 
