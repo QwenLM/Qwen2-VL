@@ -103,7 +103,7 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
 
 ### Multilingual Benchmarks
 
-<table style="width:75%;">
+<table style="width:75%; text-align:center;">
     <tr>
         <th>Models</th>
         <td>AR</td>
