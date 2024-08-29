@@ -106,7 +106,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
 <table style="width:75%;">
     <tr>
         <th>Models</th>
-        <td>Open-Source</td>
         <td>AR</td>
         <td>DE</td>
         <td>FR</td>
@@ -120,7 +119,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">Qwen2-VL-72B</th>
-        <td align="middle">✅ Coming soon</td>
         <td>20.7 </td>
         <td>36.5 </td>
         <td>44.1 </td>
@@ -134,7 +132,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">GPT-4o</th>
-        <td align="middle">✘</td>
         <td>20.2 </td>
         <td>34.2 </td>
         <td>41.2 </td>
@@ -148,7 +145,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
         <tr>
         <th align="left">Claude3 Opus</th>
-        <td align="middle">✘</td>
         <td>15.1 </td>
         <td>33.4 </td>
         <td>40.6 </td>
@@ -162,7 +158,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
     </tr>
     <tr>
         <th align="left">Gemini Ultra</th>
-        <td align="middle">✘</td>
         <td>14.7 </td>
         <td>32.3 </td>
         <td>40.0 </td>
@@ -173,20 +168,6 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
         <td>20.3 </td>
         <td>28.6 </td>
         <td>23.2</td>
-    </tr>
-        <tr>
-        <th align="left">Qwen-VL-Max-0201</th>
-        <td align="middle">✘</td>
-        <td>7.7 </td>
-        <td>31.4 </td>
-        <td>37.6 </td>
-        <td>30.2 </td>
-        <td>18.6 </td>
-        <td>25.4 </td>
-        <td>10.4 </td>
-        <td>4.8 </td>
-        <td>23.5 </td>
-        <td>21.1  </td>
     </tr>
 </table>
 
