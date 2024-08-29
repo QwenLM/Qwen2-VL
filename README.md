@@ -106,16 +106,16 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
 <table style="width:75%; text-align:center;">
     <tr>
         <th>Models</th>
-        <td>AR</td>
-        <td>DE</td>
-        <td>FR</td>
-        <td>IT</td>
-        <td>JA</td>
-        <td>KO</td>
-        <td>RU</td>
-        <td>TH</td>
-        <td>VI</td>
-        <td>Average</td>
+        <td>AR </td>
+        <td>DE </td>
+        <td>FR </td>
+        <td>IT </td>
+        <td>JA </td>
+        <td>KO </td>
+        <td>RU </td>
+        <td>TH </td>
+        <td>VI </td>
+        <td>AVG</td>
     </tr>
     <tr>
         <th align="left">Qwen2-VL-72B</th>
