@@ -1241,7 +1241,7 @@ script.
 Before you start, make sure you have installed the following packages:
 
 1. Follow the instructions of
-   `LLaMA-Factory <https://github.com/hiyouga/LLaMA-Factory>`__, and build
+   `LLaMA-Factory <https://github.com/hiyouga/LLaMA-Factory>`, and build
    the environment.
 2. Install these packages (Optional):
 
@@ -1251,7 +1251,7 @@ pip install flash-attn --no-build-isolation
 ```
 
 3. If you want to use
-   `FlashAttention-2 <https://github.com/Dao-AILab/flash-attention>`__,
+   `FlashAttention-2 <https://github.com/Dao-AILab/flash-attention>`,
    make sure your CUDA is 11.6 and above.
 
 #### Data Preparation
