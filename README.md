@@ -1375,13 +1375,6 @@ hyperparameters. One argument to note is ``cutoff_len``, which is the
 maximum length of the training data. Control this parameter to avoid OOM
 error.
 
-#### Conclusion
-
-The above content is the simplest way to use LLaMA-Factory to train
-Qwen2-VL. Feel free to dive into the details by checking the official repo!
-
-
-
 ## Function Calling
 
 Qwen2-VL supports Function Calling (aka. Tool Calling or Tool Use). For details on how to use this capability, please refer to the Qwen-Agent project for [the function calling example](https://github.com/QwenLM/Qwen-Agent/blob/main/examples/qwen2vl_function_calling.py) and [the agent example](https://github.com/QwenLM/Qwen-Agent/blob/main/examples/qwen2vl_assistant_tooluse.py). 
