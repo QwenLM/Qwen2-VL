@@ -471,9 +471,9 @@ processor = AutoProcessor.from_pretrained(
 
 Besides, We provide two methods for fine-grained control over the image size input to the model:
 
-1. Define min_pixels and max_pixels: Images will be resized to maintain their aspect ratio within the range of min_pixels and max_pixels.
-   
-2. Specify exact dimensions: Directly set `resized_height` and `resized_width`. These values will be rounded to the nearest multiple of 28.
+1. Specify exact dimensions: Directly set `resized_height` and `resized_width`. These values will be rounded to the nearest multiple of 28.
+
+2. Define min_pixels and max_pixels: Images will be resized to maintain their aspect ratio within the range of min_pixels and max_pixels.
 
 ```python
 # min_pixels and max_pixels
