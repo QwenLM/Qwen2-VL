@@ -29,7 +29,6 @@ After a year's relentless efforts, today we are thrilled to release **Qwen2-VL**
 #### Model Architecture Updates:
 
 * **Naive Dynamic Resolution**: Unlike before, Qwen2-VL can handle arbitrary image resolutions, mapping them into a dynamic number of visual tokens, offering a more human-like visual processing experience.
-
 <p align="center">
     <img src="https://qianwen-res.oss-accelerate-overseas.aliyuncs.com/Qwen2-VL/qwen2_vl.jpg" width="80%"/>
 <p>
@@ -59,7 +58,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | OCRBench | 852 | 788 | 736 | **855** |845| 794
 | MTVQA | 17.3 | 25.7 | 27.8 | **32.6** |26.3| 20.0
 | RealWorldQA | 72.2 | 60.1 | 75.4 | **77.8** | 70.1| 62.9
-| MME<sub>sum</sub>   | 2414.7 | 1920.0 | 2328.7 | **2482.7** | 2226.8 | 1872.0
+| MME<sub>sum</sub>   | 2414.7 | 1920.0 | 2328.7 | **2482.7** | 2326.8 | 1872.0
 | MMBench-EN<sub>test</sub>  | **86.5** | 79.7 | 83.4 | **86.5** | 83.0 | 74.9
 | MMBench-CN<sub>test</sub>  | 86.3 | 80.7 | 82.1 | **86.6** | 80.5| 73.5
 | MMBench-V1.1<sub>test</sub>  | 85.5 | 78.5 | 82.2 | **85.9** |80.7| 72.2
@@ -82,19 +81,20 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 ### Agent Benchmarks
 |     |Benchmark | Metic | Previous SoTA | GPT-4o | **Qwen2-VL-72B** |
 | :-- | :-- | :--: | :--: | :--: | :--: |
-|   General  | FnCall<sup>[1]</sup> | TM | - | 90 | **93.1** |
-|     |  | EM | - | 50 | **53.2** |
+|   General  | FnCall<sup>[1]</sup> | TM | - | 90.2 | **93.1** |
+|     |  | EM | - | 50.0 | **53.2** |
 |   Game  | Number Line | SR | 89.4<sup>[2]</sup> | 91.5 | **100.0** |
 |     | BlackJack | SR | 40.5<sup>[2]</sup> | 34.5 | **42.6** |
 |     | EZPoint | SR | 50.0<sup>[2]</sup> | 85.5 | **100.0** |
 |     | Point24 | SR | 2.6<sup>[2]</sup> | 3.0 | **4.5** |
-| Android | AITZ<sub>test</sub>  | TM | 83.0<sup>[3]</sup> | 63.8 | **89.6** |
-|     |  | EM | 47.7<sup>[3]</sup> | 31.5 | **72.1** |
-| AI2THOR | ALFRED<sub>valid-unseen</sub> | SR | 67.7<sup>[4]</sup> | - | 66.7 |
-|     |  | GC | 75.3<sup>[4]</sup> | - | 74.9 | 
-|  VLN   | R2R  | GC | 79.0 | 43.7<sup>[5]</sup> | 51.7 | 
-|     | REVERIE | GC | 61.0 | 38.8<sup>[5]</sup> | 31.0 | 
-|     | R4R  | GC | 61.8 |  | 36.4 | 
+| Android | AITZ<sub>test</sub>  | TM | 83.0<sup>[3]</sup> | 70.0 | **89.6** |
+|     |  | EM | 47.7<sup>[3]</sup> | 35.3 | **72.1** |
+|     | GUI Odyssey | EM | 74.2<sup>[4]</sup> | 20.4 | 43.8 |
+| AI2THOR | ALFRED<sub>valid-unseen</sub> | SR | 67.7<sup>[4]</sup> | - | **67.8** |
+|     |  | GC | 75.3<sup>[5]</sup> | - | **75.8** | 
+|  VLN   | R2R  | GC | **79.0** | 43.7<sup>[6]</sup> | 51.7 | 
+|     | REVERIE | GC | **61.0** | 38.8<sup>[6]</sup> | 31.0 | 
+|     | R4R  | GC | **61.8** |  | 36.4 | 
 
 SR, GC, TM and EM are short for success rate, goal-condition success, type match and exact match.
 1. Self-Curated Function Call Benchmark by Qwen Team
@@ -198,7 +198,11 @@ These results are evaluated on the benchmark of [MTVQA](https://github.com/byted
 
 Below, we provide simple examples to show how to use Qwen2-VL with 🤖 ModelScope and 🤗 Transformers.
 
-The code of Qwen2-VL has been in the latest Hugging face transformers and we advise you to build from source with command `pip install git+https://github.com/huggingface/transformers`, or you might encounter the following error:
+The code of Qwen2-VL has been in the latest Hugging face transformers and we advise you to build from source with command:
+```
+pip install git+https://github.com/huggingface/transformers accelerate
+```
+or you might encounter the following error:
 ```
 KeyError: 'qwen2_vl'
 ```
@@ -215,17 +219,18 @@ pip install qwen-vl-utils
 Here we show a code snippet to show you how to use the chat model with `transformers` and `qwen_vl_utils`:
 
 ```python
-
 from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
 from qwen_vl_utils import process_vision_info
 
 # default: Load the model on the available device(s)
-model = Qwen2VLForConditionalGeneration.from_pretrained("Qwen/Qwen2-VL-7B-Instruct", torch_dtype='auto', device_map="auto")
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    "Qwen/Qwen2-VL-7B-Instruct", torch_dtype="auto", device_map="auto"
+)
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 # model = Qwen2VLForConditionalGeneration.from_pretrained(
-#     "Qwen/Qwen2-VL-7B-Instruct", 
-#     torch_dtype=torch.bfloat16, 
+#     "Qwen/Qwen2-VL-7B-Instruct",
+#     torch_dtype=torch.bfloat16,
 #     attn_implementation="flash_attention_2",
 #     device_map="auto",
 # )
@@ -243,22 +248,37 @@ messages = [
     {
         "role": "user",
         "content": [
-            {"type": "image", "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg"},
-            {"type": "text", "text": "Describe this image."}
-        ]
+            {
+                "type": "image",
+                "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
     }
 ]
 
 # Preparation for inference
-text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
-inputs = inputs.to('cuda')
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to("cuda")
 
 # Inference: Generation of the output
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_text = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_text)
 ```
 <details>
@@ -272,21 +292,33 @@ messages = [
         "content": [
             {"type": "image", "image": "file:///path/to/image1.jpg"},
             {"type": "image", "image": "file:///path/to/image2.jpg"},
-            {"type": "text", "text": "Identify the similarities between these images."}
-        ]
+            {"type": "text", "text": "Identify the similarities between these images."},
+        ],
     }
 ]
 
 # Preparation for inference
-text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
-inputs = inputs.to('cuda')
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to("cuda")
 
 # Inference
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_text = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_text)
 ```
 </details>
@@ -295,7 +327,6 @@ print(output_text)
 <summary>Video inference</summary>
 
 ```python
-
 # Messages containing a images list as a video and a text query
 messages = [
     {
@@ -307,15 +338,12 @@ messages = [
                     "file:///path/to/frame1.jpg",
                     "file:///path/to/frame2.jpg",
                     "file:///path/to/frame3.jpg",
-                    "file:///path/to/frame4.jpg"
+                    "file:///path/to/frame4.jpg",
                 ],
-                "fps": 1.0
+                "fps": 1.0,
             },
-            {
-                "type": "text",
-                "text": "Describe this video."
-            }
-        ]
+            {"type": "text", "text": "Describe this video."},
+        ],
     }
 ]
 
@@ -324,22 +352,39 @@ messages = [
     {
         "role": "user",
         "content": [
-            {"type": "video", "video": "file:///path/to/video1.mp4", 'max_pixels': 360*420, 'fps': 1.0},
-            {"type": "text", "text": "Describe this video."}
-        ]
+            {
+                "type": "video",
+                "video": "file:///path/to/video1.mp4",
+                "max_pixels": 360 * 420,
+                "fps": 1.0,
+            },
+            {"type": "text", "text": "Describe this video."},
+        ],
     }
 ]
 
 # Preparation for inference
-text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
-inputs = inputs.to('cuda')
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to("cuda")
 
 # Inference
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_text = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_text)
 ```
 </details>
@@ -348,36 +393,47 @@ print(output_text)
 <summary>Batch inference</summary>
 
 ```python
-
 # Sample messages for batch inference
 messages1 = [
     {
         "role": "user",
-        "content":
-            [
-                {"type": "image", "image": "file:///path/to/image1.jpg"},
-                {"type": "image", "image": "file:///path/to/image2.jpg"},
-                {"type": "text", "text": "What are the common elements in these pictures?"}
-            ]
+        "content": [
+            {"type": "image", "image": "file:///path/to/image1.jpg"},
+            {"type": "image", "image": "file:///path/to/image2.jpg"},
+            {"type": "text", "text": "What are the common elements in these pictures?"},
+        ],
     }
 ]
 messages2 = [
     {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "Who are you?"}
+    {"role": "user", "content": "Who are you?"},
 ]
 # Combine messages for batch processing
 messages = [messages1, messages1]
 
 # Preparation for batch inference
-texts = [processor.apply_chat_template(msg, tokenize=False, add_generation_prompt=True) for msg in messages]
+texts = [
+    processor.apply_chat_template(msg, tokenize=False, add_generation_prompt=True)
+    for msg in messages
+]
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=texts, images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
-inputs = inputs.to('cuda')
+inputs = processor(
+    text=texts,
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to("cuda")
 
 # Batch Inference
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_texts = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_texts = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_texts)
 ```
 </details>
@@ -392,22 +448,46 @@ For input images, we support local files, base64, and URLs. For videos, we curre
 ```python
 # You can directly insert a local file path, a URL, or a base64-encoded image into the position where you want in the text.
 ## Local file path
-messages = [{"role": "user", "content": [{"type": "image", "image": "file:///path/to/your/image.jpg"}, {"type": "text", "text": "Describe this image."}]}]
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "image", "image": "file:///path/to/your/image.jpg"},
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 ## Image URL
-messages = [{"role": "user", "content": [{"type": "image", "image": "http://path/to/your/image.jpg"}, {"type": "text", "text": "Describe this image."}]}]
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "image", "image": "http://path/to/your/image.jpg"},
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 ## Base64 encoded image
-messages = [{"role": "user", "content": [{"type": "image", "image": "data:image;base64,/9j/..."}, {"type": "text", "text": "Describe this image."}]}]
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "image", "image": "data:image;base64,/9j/..."},
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 ```
 #### Image Resolution for performance boost
 
 The model supports a wide range of resolution inputs. By default, it uses the native resolution for input, but higher resolutions can enhance performance at the cost of more computation. Users can set the minimum and maximum number of pixels to achieve an optimal configuration for their needs, such as a token count range of 256-1280, to balance speed and memory usage.
 
 ```python
-
-min_pixels = 256*28*28
-max_pixels = 1280*28*28
-processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct", min_pixels=min_pixels, max_pixels=max_pixels)
-
+min_pixels = 256 * 28 * 28
+max_pixels = 1280 * 28 * 28
+processor = AutoProcessor.from_pretrained(
+    "Qwen/Qwen2-VL-7B-Instruct", min_pixels=min_pixels, max_pixels=max_pixels
+)
 ```
 
 Besides, We provide two methods for fine-grained control over the image size input to the model:
@@ -422,9 +502,14 @@ messages = [
     {
         "role": "user",
         "content": [
-            {"type": "image", "image": "file:///path/to/your/image.jpg", "resized_height": 280, "resized_width": 420},
-            {"type": "text", "text": "Describe this image."}
-        ]
+            {
+                "type": "image",
+                "image": "file:///path/to/your/image.jpg",
+                "resized_height": 280,
+                "resized_width": 420,
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
     }
 ]
 # resized_height and resized_width
@@ -432,9 +517,14 @@ messages = [
     {
         "role": "user",
         "content": [
-            {"type": "image", "image": "file:///path/to/your/image.jpg", "min_pixels": 50176, "max_pixels": 50176},
-            {"type": "text", "text": "Describe this image."}
-        ]
+            {
+                "type": "image",
+                "image": "file:///path/to/your/image.jpg",
+                "min_pixels": 50176,
+                "max_pixels": 50176,
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
     }
 ]
 ```
@@ -445,48 +535,47 @@ By default, images and video content are directly included in the conversation. 
 <summary>Add vision ids</summary>
 
 ```python
-
 conversation = [
     {
         "role": "user",
-        "content": [
-            {"type": "image"}, 
-            {"type": "text", "text": "Hello, how are you?"}
-        ]
+        "content": [{"type": "image"}, {"type": "text", "text": "Hello, how are you?"}],
     },
     {
         "role": "assistant",
-        "content": "I'm doing well, thank you for asking. How can I assist you today?"
+        "content": "I'm doing well, thank you for asking. How can I assist you today?",
     },
     {
         "role": "user",
         "content": [
-            {"type": "text", "text": "Can you describe these images and video?"}, 
-            {"type": "image"}, 
-            {"type": "image"}, 
-            {"type": "video"}, 
-            {"type": "text", "text": "These are from my vacation."}
-        ]
+            {"type": "text", "text": "Can you describe these images and video?"},
+            {"type": "image"},
+            {"type": "image"},
+            {"type": "video"},
+            {"type": "text", "text": "These are from my vacation."},
+        ],
     },
     {
         "role": "assistant",
-        "content": "I'd be happy to describe the images and video for you. Could you please provide more context about your vacation?"
+        "content": "I'd be happy to describe the images and video for you. Could you please provide more context about your vacation?",
     },
     {
         "role": "user",
-        "content": "It was a trip to the mountains. Can you see the details in the images and video?"
-    }
+        "content": "It was a trip to the mountains. Can you see the details in the images and video?",
+    },
 ]
 
 # default:
-prompt_without_id = processor.apply_chat_template(conversation, add_generation_prompt=True)
+prompt_without_id = processor.apply_chat_template(
+    conversation, add_generation_prompt=True
+)
 # Excepted output: '<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\n<|vision_start|><|image_pad|><|vision_end|>Hello, how are you?<|im_end|>\n<|im_start|>assistant\nI'm doing well, thank you for asking. How can I assist you today?<|im_end|>\n<|im_start|>user\nCan you describe these images and video?<|vision_start|><|image_pad|><|vision_end|><|vision_start|><|image_pad|><|vision_end|><|vision_start|><|video_pad|><|vision_end|>These are from my vacation.<|im_end|>\n<|im_start|>assistant\nI'd be happy to describe the images and video for you. Could you please provide more context about your vacation?<|im_end|>\n<|im_start|>user\nIt was a trip to the mountains. Can you see the details in the images and video?<|im_end|>\n<|im_start|>assistant\n'
 
 
 # add ids
-prompt_with_id = processor.apply_chat_template(conversation, add_generation_prompt=True, add_vision_id=True)
+prompt_with_id = processor.apply_chat_template(
+    conversation, add_generation_prompt=True, add_vision_id=True
+)
 # Excepted output: '<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n<|im_start|>user\nPicture 1: <|vision_start|><|image_pad|><|vision_end|>Hello, how are you?<|im_end|>\n<|im_start|>assistant\nI'm doing well, thank you for asking. How can I assist you today?<|im_end|>\n<|im_start|>user\nCan you describe these images and video?Picture 2: <|vision_start|><|image_pad|><|vision_end|>Picture 3: <|vision_start|><|image_pad|><|vision_end|>Video 1: <|vision_start|><|video_pad|><|vision_end|>These are from my vacation.<|im_end|>\n<|im_start|>assistant\nI'd be happy to describe the images and video for you. Could you please provide more context about your vacation?<|im_end|>\n<|im_start|>user\nIt was a trip to the mountains. Can you see the details in the images and video?<|im_end|>\n<|im_start|>assistant\n'
-
 ```
 </details>
 
@@ -512,33 +601,37 @@ model = Qwen2VLForConditionalGeneration.from_pretrained(
 )
 ```
 
+
 ### Try Qwen2-VL-72B with API!
 
 To explore Qwen2-VL-72B, a more fascinating multimodal model, we encourage you to test our cutting-edge API service. Let's start the exciting journey right now!
 
+#### Installation
+```bash
+pip install dashscope
+```
+
+#### Examples
 ```python
-from dashscope import MultiModalConversation
+import dashscope
 
 
-def call_Qwen2_VL_72B():
-    messages = [{
-        'role': 'user',
-        'content': [
-            {
-                'image': "https://dashscope.oss-cn-beijing.aliyuncs.com/images/dog_and_girl.jpeg"
-            },
-            {
-                'text': 'What are in the image?'
-            },
-        ]
-    }]
-    # The model name 'qwen-vl-max-0809' is the identity of 'Qwen2-VL-72B'.
-    response = MultiModalConversation.call(model='qwen-vl-max-0809', messages=messages)
-    print(response)
+dashscope.api_key = "your_api_key"
 
-
-if __name__ == '__main__':
-    call_Qwen2_VL_72B()
+messages = [{
+    'role': 'user',
+    'content': [
+        {
+            'image': "https://dashscope.oss-cn-beijing.aliyuncs.com/images/dog_and_girl.jpeg"
+        },
+        {
+            'text': 'What are in the image?'
+        },
+    ]
+}]
+# The model name 'qwen-vl-max-0809' is the identity of 'Qwen2-VL-72B'.
+response = dashscope.MultiModalConversation.call(model='qwen-vl-max-0809', messages=messages)
+print(response)
 ```
 
 For more usage, please refer to the tutorial at [aliyun](https://help.aliyun.com/zh/model-studio/developer-reference/qwen-vl-api).
@@ -557,31 +650,58 @@ from qwen_vl_utils import process_vision_info
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 # model = Qwen2VLForConditionalGeneration.from_pretrained(
-#     "Qwen/Qwen2-VL-7B-Instruct-AWQ", 
-#     torch_dtype="auto", 
+#     "Qwen/Qwen2-VL-7B-Instruct-AWQ",
+#     torch_dtype="auto",
 #     attn_implementation="flash_attention_2",
 #     device_map="auto",
 # )
 
 # default: Load the model on the available device(s)
-model = Qwen2VLForConditionalGeneration.from_pretrained("Qwen/Qwen2-VL-7B-Instruct-AWQ", torch_dtype="auto", device_map="auto")
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    "Qwen/Qwen2-VL-7B-Instruct-AWQ", torch_dtype="auto", device_map="auto"
+)
 
 # The default range for the number of visual tokens per image in the model is 4-16384. You can set min_pixels and max_pixels according to your needs, such as a token count range of 256-1280, to balance speed and memory usage.
-min_pixels = 256*28*28
-max_pixels = 1280*28*28
-processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct-AWQ", min_pixels=min_pixels, max_pixels=max_pixels)
+min_pixels = 256 * 28 * 28
+max_pixels = 1280 * 28 * 28
+processor = AutoProcessor.from_pretrained(
+    "Qwen/Qwen2-VL-7B-Instruct-AWQ", min_pixels=min_pixels, max_pixels=max_pixels
+)
 
-messages = [{"role": "user", "content": [{"type": "image", "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg"}, {"type": "text", "text": "Describe this image."}]}]
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 
 # Preparation for inference
-text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
 
 # Inference: Generation of the output
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_text = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_text)
 ```
 #### Quantize Your Own Model with AutoAWQ
@@ -646,7 +766,9 @@ here, we use a caption dataset **only for demonstration**. You should replace it
 def prepare_dataset(n_sample: int = 8) -> list[list[dict]]:
     from datasets import load_dataset
 
-    dataset = load_dataset("laion/220k-GPT4Vision-captions-from-LIVIS", split=f"train[:{n_sample}]")
+    dataset = load_dataset(
+        "laion/220k-GPT4Vision-captions-from-LIVIS", split=f"train[:{n_sample}]"
+    )
     return [
         [
             {
@@ -660,15 +782,26 @@ def prepare_dataset(n_sample: int = 8) -> list[list[dict]]:
         ]
         for sample in dataset
     ]
+
+
 dataset = prepare_dataset()
 ```
 
 Then process the dataset into tensors:
 ```python
 from qwen_vl_utils import process_vision_info
-text = processor.apply_chat_template(dataset, tokenize=False, add_generation_prompt=True)
+
+text = processor.apply_chat_template(
+    dataset, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(dataset)
-inputs = processor(text=text, images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
+inputs = processor(
+    text=text,
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
 ```
 
 Then just run the calibration process by one line of code:
@@ -686,37 +819,63 @@ Then you can obtain your own AWQ quantized model for deployment. Enjoy!
 #### Usage of GPTQ Models with Transformers
 Now, Transformers has officially supported AutoGPTQ, which means that you can directly use the quantized model with Transformers. The following is a very simple code snippet showing how to run `Qwen2-VL-7B-Instruct-GPTQ-Int4` with the quantized model:
 ```python
-
 from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
 from qwen_vl_utils import process_vision_info
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 # model = Qwen2VLForConditionalGeneration.from_pretrained(
-#     "Qwen2-VL-7B-Instruct-GPTQ-Int4", 
-#     torch_dtype=torch.bfloat16, 
+#     "Qwen2-VL-7B-Instruct-GPTQ-Int4",
+#     torch_dtype=torch.bfloat16,
 #     attn_implementation="flash_attention_2",
 #     device_map="auto",
 # )
 
 # default: Load the model on the available device(s)
-model = Qwen2VLForConditionalGeneration.from_pretrained("Qwen2-VL-7B-Instruct-GPTQ-Int4", torch_dtype="auto", device_map="auto")
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    "Qwen2-VL-7B-Instruct-GPTQ-Int4", torch_dtype="auto", device_map="auto"
+)
 
 # The default range for the number of visual tokens per image in the model is 4-16384. You can set min_pixels and max_pixels according to your needs, such as a token count range of 256-1280, to balance speed and memory usage.
-min_pixels = 256*28*28
-max_pixels = 1280*28*28
-processor = AutoProcessor.from_pretrained("Qwen2-VL-7B-Instruct-GPTQ-Int4", min_pixels=min_pixels, max_pixels=max_pixels)
+min_pixels = 256 * 28 * 28
+max_pixels = 1280 * 28 * 28
+processor = AutoProcessor.from_pretrained(
+    "Qwen2-VL-7B-Instruct-GPTQ-Int4", min_pixels=min_pixels, max_pixels=max_pixels
+)
 
-messages = [{"role": "user", "content": [{"type": "image", "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg"}, {"type": "text", "text": "Describe this image."}]}]
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+            },
+            {"type": "text", "text": "Describe this image."},
+        ],
+    }
+]
 
 # Preparation for inference
-text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
 image_inputs, video_inputs = process_vision_info(messages)
-inputs = processor(text=[text], images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
 
 # Inference: Generation of the output
 generated_ids = model.generate(**inputs, max_new_tokens=128)
-generated_ids_trimmed = [out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)]
-output_text = processor.batch_decode(generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
 print(output_text)
 ```
 #### Quantize Your Own Model with AutoGPTQ
@@ -780,7 +939,10 @@ Here, we use a caption dataset **only for demonstration**. You should replace it
 ```python
 def prepare_dataset(n_sample: int = 20) -> list[list[dict]]:
     from datasets import load_dataset
-    dataset = load_dataset("laion/220k-GPT4Vision-captions-from-LIVIS", split=f"train[:{n_sample}]")
+
+    dataset = load_dataset(
+        "laion/220k-GPT4Vision-captions-from-LIVIS", split=f"train[:{n_sample}]"
+    )
     return [
         [
             {
@@ -794,12 +956,15 @@ def prepare_dataset(n_sample: int = 20) -> list[list[dict]]:
         ]
         for sample in dataset
     ]
+
+
 dataset = prepare_dataset()
 ```
 
 Then process the dataset into tensors:
 ```python
 from qwen_vl_utils import process_vision_info
+
 
 def batched(iterable, n: int):
     # batched('ABCDEFG', 3) → ABC DEF G
@@ -810,12 +975,21 @@ def batched(iterable, n: int):
     while batch := tuple(islice(iterator, n)):
         yield batch
 
+
 batch_size = 1
 calib_data = []
 for batch in batched(dataset, batch_size):
-    text = processor.apply_chat_template(batch, tokenize=False, add_generation_prompt=True)
+    text = processor.apply_chat_template(
+        batch, tokenize=False, add_generation_prompt=True
+    )
     image_inputs, video_inputs = process_vision_info(batch)
-    inputs = processor(text=text, images=image_inputs, videos=video_inputs, padding=True, return_tensors="pt")
+    inputs = processor(
+        text=text,
+        images=image_inputs,
+        videos=video_inputs,
+        padding=True,
+        return_tensors="pt",
+    )
     calib_data.append(inputs)
 ```
 Then just run the calibration process by one line of code:
@@ -941,6 +1115,7 @@ curl http://localhost:8000/v1/chat/completions \
 
 ```python
 from openai import OpenAI
+
 # Set OpenAI's API key and API base to use vLLM's API server.
 openai_api_key = "EMPTY"
 openai_api_base = "http://localhost:8000/v1"
@@ -954,11 +1129,19 @@ chat_response = client.chat.completions.create(
     model="Qwen2-7B-Instruct",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": [
-            {"type": "image_url", "image_url": {"url": "https://modelscope.oss-cn-beijing.aliyuncs.com/resource/qwen.png"}},
-            {"type": "text", "text": "What is the text in the illustrate?"},
-        ]},
-    ]
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://modelscope.oss-cn-beijing.aliyuncs.com/resource/qwen.png"
+                    },
+                },
+                {"type": "text", "text": "What is the text in the illustrate?"},
+            ],
+        },
+    ],
 )
 print("Chat response:", chat_response)
 ```
@@ -980,46 +1163,54 @@ from transformers import AutoProcessor
 from vllm import LLM, SamplingParams
 from qwen_vl_utils import process_vision_info
 
-MODEL_PATH='Qwen/Qwen2-VL-7B-Instruct'
+MODEL_PATH = "Qwen/Qwen2-VL-7B-Instruct"
 
 llm = LLM(
     model=MODEL_PATH,
-    limit_mm_per_prompt={'image': 10, 'video': 10},
+    limit_mm_per_prompt={"image": 10, "video": 10},
 )
 
 sampling_params = SamplingParams(
-    temperature=0.1, top_p=0.001, repetition_penalty=1.05, max_tokens=256,
+    temperature=0.1,
+    top_p=0.001,
+    repetition_penalty=1.05,
+    max_tokens=256,
     stop_token_ids=[],
 )
 
 messages = [
-    {'role': 'system', 'content': 'You are a helpful assistant.'},
-    {'role': 'user', 'content': [
-        {
-            'type': 'image',
-            'image': 'https://modelscope.oss-cn-beijing.aliyuncs.com/resource/qwen.png',
-            'min_pixels': 224 * 224,
-            'max_pixels': 1280 * 28 * 28,
-        },
-        {'type': 'text', 'text': 'What is the text in the illustrate?'},
-    ]},
+    {"role": "system", "content": "You are a helpful assistant."},
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "https://modelscope.oss-cn-beijing.aliyuncs.com/resource/qwen.png",
+                "min_pixels": 224 * 224,
+                "max_pixels": 1280 * 28 * 28,
+            },
+            {"type": "text", "text": "What is the text in the illustrate?"},
+        ],
+    },
 ]
 
 processor = AutoProcessor.from_pretrained(MODEL_PATH)
 prompt = processor.apply_chat_template(
-    messages, tokenize=False, add_generation_prompt=True,
+    messages,
+    tokenize=False,
+    add_generation_prompt=True,
 )
 image_inputs, video_inputs = process_vision_info(messages)
 
 mm_data = {}
 if image_inputs is not None:
-    mm_data['image'] = image_inputs
+    mm_data["image"] = image_inputs
 if video_inputs is not None:
-    mm_data['video'] = video_inputs
+    mm_data["video"] = video_inputs
 
 llm_inputs = {
-    'prompt': prompt,
-    'multi_modal_data': mm_data,
+    "prompt": prompt,
+    "multi_modal_data": mm_data,
 }
 
 outputs = llm.generate([llm_inputs], sampling_params=sampling_params)
