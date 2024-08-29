@@ -1,0 +1,57 @@
+ARG CUDA_VERSION=12.1.0
+ARG from=nvidia/cuda:${CUDA_VERSION}-cudnn8-devel-ubuntu20.04
+
+FROM ${from} as base
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN <<EOF
+apt update -y && apt upgrade -y && apt install -y --no-install-recommends  \
+    git \
+    git-lfs \
+    python3 \
+    python3-pip \
+    python3-dev \
+    wget \
+    vim \
+    cmake \
+&& rm -rf /var/lib/apt/lists/*
+EOF
+
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+RUN git lfs install
+
+FROM base as dev
+
+WORKDIR /
+
+RUN mkdir -p /data/shared/Qwen
+
+WORKDIR /data/shared/Qwen/
+
+FROM dev as bundle_req
+RUN pip install --no-cache-dir networkx==3.1
+RUN pip3 install --no-cache-dir torch==2.4.0 torchvision==0.19 torchaudio==2.4.0 xformers==0.0.27.post2 --index-url https://download.pytorch.org/whl/cu121
+
+RUN pip3 install --no-cache-dir git+https://github.com/huggingface/transformers@19e6e80e10118f855137b90740936c0b11ac397f  \
+    && pip3 install --no-cache-dir accelerate \
+    && pip3 install --no-cache-dir qwen-vl-utils
+
+FROM bundle_req as bundle_vllm
+
+RUN pip3 install --no-cache-dir --no-build-isolation flash-attn==2.6.1
+
+RUN mkdir -p /data/shared/code \
+    && cd /data/shared/code \
+    && git clone https://github.com/fyabc/vllm.git \
+    && cd vllm \
+    && git checkout add_qwen2_vl_new \
+    && pip3 install -r requirements-cuda.txt \
+    && pip3 install --no-cache-dir --no-build-isolation . \
+    && cd /data/shared/Qwen \
+    && rm -rf /data/shared/code/vllm
+
+COPY ../utils.py ./
+COPY ../web_demo_mm.py ./
+
+EXPOSE 80
