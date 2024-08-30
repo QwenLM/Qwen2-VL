@@ -79,7 +79,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | Video-MME<br><sub>(wo/w subs)</sub>  | 66.3/69.6  | **75.0**/**81.3** | 71.9/77.2 | 71.2/77.8 | 63.3/69.0 |55.6/60.4
 
 ### Agent Benchmarks
-|     |Benchmark | Metic | Previous SoTA | GPT-4o | **Qwen2-VL-72B** |
+|     |Benchmark | Metric | Previous SoTA | GPT-4o | **Qwen2-VL-72B** |
 | :-- | :-- | :--: | :--: | :--: | :--: |
 |   General  | FnCall<sup>[1]</sup> | TM | - | 90.2 | **93.1** |
 |     |  | EM | - | 50.0 | **53.2** |
