@@ -715,7 +715,7 @@ model = Qwen2VLAWQForConditionalGeneration.from_pretrained(
     model_path, model_type="qwen2_vl", use_cache=False
 )
 ```
-Then you need to prepare your data for calibaration. What you need to do is just put samples into a list, each of which is a typical chat message as shown below. you can specify `text` and `image` in `content` field, For example:
+Then you need to prepare your data for calibration. What you need to do is just put samples into a list, each of which is a typical chat message as shown below. you can specify `text` and `image` in `content` field, For example:
 ```python
 dataset = [
     # message 0
@@ -890,7 +890,7 @@ processor = Qwen2VLProcessor.from_pretrained(model_path)
 # model = Qwen2VLGPTQForConditionalGeneration.from_pretrained(model_path, quantize_config, attn_implementation="flash_attention_2")
 model = Qwen2VLGPTQForConditionalGeneration.from_pretrained(model_path, quantize_config)
 ```
-Then you need to prepare your data for calibaration. What you need to do is just put samples into a list, each of which is a typical chat message as shown below. you can specify `text` and `image` in `content` field, For example:
+Then you need to prepare your data for calibration. What you need to do is just put samples into a list, each of which is a typical chat message as shown below. you can specify `text` and `image` in `content` field, For example:
 ```python
 dataset = [
     # message 0
