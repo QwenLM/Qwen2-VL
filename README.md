@@ -1267,7 +1267,8 @@ your dataset as follows.
       }
     ],
     "images": [
-      "mllm_demo_data/1.jpg","mllm_demo_data/1.jpg"
+      "mllm_demo_data/1.jpg",
+      "mllm_demo_data/1.jpg"
     ]
   },
 ]
@@ -1318,19 +1319,16 @@ torchrun $DISTRIBUTED_ARGS src/train.py \
     --deepspeed $DS_CONFIG_PATH \
     --stage sft \
     --do_train \
-    --use_fast_tokenizer \
-    --flash_attn \
-    --model_name_or_path $MODEL_PATH \
-    --dataset your_dataset \
-    --template qwen2vl \
+    --model_name_or_path Qwen/Qwen2-VL-7B-Instruct \
+    --dataset mllm_demo \
+    --template qwen2_vl \
     --finetuning_type lora \
-    --lora_target q_proj,v_proj\
     --output_dir $OUTPUT_PATH \
     --overwrite_cache \
     --overwrite_output_dir \
     --warmup_steps 100 \
     --weight_decay 0.1 \
-    --per_device_train_batch_size 4 \
+    --per_device_train_batch_size 2 \
     --gradient_accumulation_steps 4 \
     --ddp_timeout 9000 \
     --learning_rate 5e-6 \
