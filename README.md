@@ -1302,11 +1302,18 @@ your dataset as follows.
 Lora SFT examples:
 ```
 llamafactory-cli train examples/train_lora/qwen2vl_lora_sft.yaml
+llamafactory-cli export examples/merge_lora/qwen2vl_lora_sft.yaml
 ```
 
 Full SFT examples:
 ```
 llamafactory-cli train examples/train_full/qwen2vl_full_sft.yaml
+```
+
+Inference examples:
+```
+llamafactory-cli webchat examples/inference/qwen2_vl.yaml
+llamafactory-cli api examples/inference/qwen2_vl.yaml
 ```
 
 Execute the following training command:
