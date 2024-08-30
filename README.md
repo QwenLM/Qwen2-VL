@@ -1210,7 +1210,7 @@ script for supervised finetuning (SFT) has the following features:
 
 -  Support single-GPU and multi-GPU training;
 
--  Support full-parameter tuning, LoRA.
+-  Support LoRA.
 
 In the following, we introduce more details about the usage of the
 script.
@@ -1250,7 +1250,7 @@ your dataset as follows.
   {
     "messages": [
       {
-        "content": "<|image_pad|>Who are they?",
+        "content": "<image>Who are they?",
         "role": "user"
       },
       {
@@ -1258,7 +1258,7 @@ your dataset as follows.
         "role": "assistant"
       },
       {
-        "content": "What are they doing?<|image_pad|>",
+        "content": "What are they doing?<image>",
         "role": "user"
       },
       {
@@ -1301,11 +1301,6 @@ your dataset as follows.
 Lora SFT examples:
 ```
 llamafactory-cli train examples/train_lora/qwen2vl_lora_sft.yaml
-```
-
-Full SFT examples
-```
-llamafactory-cli train examples/train_full/qwen2vl_full_sft.yaml
 ```
 
 Execute the following training command:
