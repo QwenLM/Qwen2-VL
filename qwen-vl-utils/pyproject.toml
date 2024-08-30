@@ -26,9 +26,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/kq-chen/qwen-vl-utils/"
-Repository = "https://github.com/kq-chen/qwen-vl-utils.git"
-Issues = "https://github.com/kq-chen/qwen-vl-utils/issues"
+Homepage = "https://github.com/QwenLM/Qwen2-VL/tree/main/qwen-vl-utils"
+Repository = "https://github.com/QwenLM/Qwen2-VL.git"
+Issues = "https://github.com/QwenLM/Qwen2-VL/issues"
 
 [build-system]
 requires = ["hatchling"]
