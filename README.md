@@ -14,7 +14,7 @@
 
 ## Introduction
 
-After a year's relentless efforts, today we are thrilled to release **Qwen2-VL**! Qwen2-VL is the latest version of the vision language models in the Qwen model familities. 
+After a year's relentless efforts, today we are thrilled to release **Qwen2-VL**! Qwen2-VL is the latest version of the vision language models in the Qwen model families. 
 
 #### Key Enhancements:
 
