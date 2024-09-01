@@ -1305,7 +1305,7 @@ llamafactory-cli train examples/train_lora/qwen2vl_lora_sft.yaml
 llamafactory-cli export examples/merge_lora/qwen2vl_lora_sft.yaml
 ```
 
-LoRA DPO/ORPO/SimPO examples:
+LoRA DPO/ORPO/SimPO examples: (using [RLHF-V Dataset](https://huggingface.co/datasets/llamafactory/RLHF-V))
 ```
 llamafactory-cli train examples/train_lora/qwen2vl_lora_dpo.yaml
 ```
