@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import base64
 import math
-import warnings
 from io import BytesIO
 
 import requests
@@ -115,7 +114,7 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
     return image
 
 
-def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | list[Image.Image]:
+def fetch_video(ele: dict, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | list[Image.Image]:
     if isinstance(ele["video"], str):
         # TODO: support http url
 
@@ -133,32 +132,16 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
 
         assert not ("fps" in ele and "nframes" in ele), "Only accept either `fps` or `nframes`"
         if "nframes" in ele:
-            nframes = round_by_factor(ele["nframes"], size_factor)
+            nframes = round_by_factor(ele["nframes"], FRAME_FACTOR)
         else:
             fps = ele.get("fps", FPS)
+            min_frames = ceil_by_factor(ele.get("min_frames", FPS_MIN_FRAMES), FRAME_FACTOR)
+            max_frames = floor_by_factor(ele.get("max_frames", min(FPS_MAX_FRAMES, video.size(0))), FRAME_FACTOR)
             nframes = video.size(0) / info["video_fps"] * fps
-            nframes = round_by_factor(nframes, size_factor)
-            if "min_frames" in ele:
-                min_frames = ele["min_frames"]
-                if nframes < min_frames:
-                    nframes = ceil_by_factor(min_frames, size_factor)
-            else:
-                min_frames = FPS_MIN_FRAMES
-                if nframes < min_frames:
-                    warnings.warn(f"nframes is less than DEFAULT_MIN_FRAMES {min_frames}, set to {nframes}.")
-                    nframes = ceil_by_factor(min_frames, size_factor)
-            if "max_frames" in ele:
-                max_frames = ele["max_frames"]
-                if nframes > max_frames:
-                    nframes = floor_by_factor(max_frames, size_factor)
-            else:
-                max_frames = FPS_MAX_FRAMES
-                if nframes > max_frames:
-                    warnings.warn(f"nframes is greater than DEFAULT_MAX_FRAMES {max_frames}, set to {nframes}.")
-                    nframes = floor_by_factor(max_frames, size_factor)
-
-        if not (size_factor <= nframes and nframes <= video.size(0)):
-            raise ValueError(f"nframes should in interval [{size_factor}, {video.size(0)}], but got {nframes}.")
+            nframes = min(max(nframes, min_frames), max_frames)
+            nframes = round_by_factor(nframes, FRAME_FACTOR)
+        if not (FRAME_FACTOR <= nframes and nframes <= video.size(0)):
+            raise ValueError(f"nframes should in interval [{FRAME_FACTOR}, {video.size(0)}], but got {nframes}.")
 
         idx = torch.linspace(0, video.size(0) - 1, nframes).round().long()
         height, width = video.shape[2:]
@@ -166,19 +149,19 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
 
         min_pixels = ele.get("min_pixels", VIDEO_MIN_PIXELS)
         total_pixels = ele.get("total_pixels", VIDEO_TOTAL_PIXELS)
-        max_pixels = max(min(VIDEO_MAX_PIXELS, total_pixels / nframes * size_factor), min_pixels * 1.05)
+        max_pixels = max(min(VIDEO_MAX_PIXELS, total_pixels / nframes * FRAME_FACTOR), int(min_pixels * 1.05))
         max_pixels = ele.get("max_pixels", max_pixels)
         if "resized_height" in ele and "resized_width" in ele:
             resized_height, resized_width = smart_resize(
                 ele["resized_height"],
                 ele["resized_width"],
-                factor=size_factor,
+                factor=image_factor,
             )
         else:
             resized_height, resized_width = smart_resize(
                 height,
                 width,
-                factor=size_factor,
+                factor=image_factor,
                 min_pixels=min_pixels,
                 max_pixels=max_pixels,
             )
@@ -194,8 +177,11 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
         process_info = ele.copy()
         process_info.pop("type", None)
         process_info.pop("video", None)
-        images = [fetch_image({"image": video_element, **process_info}) for video_element in ele["video"]]
-        nframes = ceil_by_factor(len(images), size_factor)
+        images = [
+            fetch_image({"image": video_element, **process_info}, size_factor=image_factor)
+            for video_element in ele["video"]
+        ]
+        nframes = ceil_by_factor(len(images), FRAME_FACTOR)
         if len(images) < nframes:
             images.extend([images[-1]] * (nframes - len(images)))
         return images
