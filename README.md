@@ -94,12 +94,13 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 |  VLN   | R2R<sub>valid-unseen</sub>  | SR | **79.0** | 43.7<sup>[5]</sup> | 51.7 | 
 |     | REVERIE<sub>valid-unseen</sub> | SR | **61.0** | 31.6<sup>[5]</sup> | 31.0 | 
 
-SR, GC, TM and EM are short for success rate, goal-condition success, type match and exact match.
+SR, GC, TM and EM are short for success rate, goal-condition success, type match and exact match. ALFRED is supported by SAM<sup>[6]</sup>.
 1. Self-Curated Function Call Benchmark by Qwen Team
 2. Fine-Tuning Large Vision-Language Models as Decision-Making Agents via Reinforcement Learning
 3. Android in the Zoo: Chain-of-Action-Thought for GUI Agents
 4. ThinkBot: Embodied Instruction Following with Thought Chain Reasoning
 5. MapGPT: Map-Guided Prompting with Adaptive Path Planning for Vision-and-Language Navigation
+6. Segment Anything.
 
 ### Multilingual Benchmarks
 
