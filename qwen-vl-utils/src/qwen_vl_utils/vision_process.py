@@ -115,7 +115,7 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
     return image
 
 
-def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | list[Image.Image]:
+def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR, image_factor: int = IMAGE_FACTOR) -> torch.Tensor | list[Image.Image]:
     if isinstance(ele["video"], str):
         # TODO: support http url
 
@@ -172,13 +172,13 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
             resized_height, resized_width = smart_resize(
                 ele["resized_height"],
                 ele["resized_width"],
-                factor=size_factor,
+                factor=image_factor,
             )
         else:
             resized_height, resized_width = smart_resize(
                 height,
                 width,
-                factor=size_factor,
+                factor=image_factor,
                 min_pixels=min_pixels,
                 max_pixels=max_pixels,
             )
@@ -194,7 +194,7 @@ def fetch_video(ele: dict, size_factor: int = FRAME_FACTOR) -> torch.Tensor | li
         process_info = ele.copy()
         process_info.pop("type", None)
         process_info.pop("video", None)
-        images = [fetch_image({"image": video_element, **process_info}) for video_element in ele["video"]]
+        images = [fetch_image({"image": video_element, **process_info}, size_factor=image_factor) for video_element in ele["video"]]
         nframes = ceil_by_factor(len(images), size_factor)
         if len(images) < nframes:
             images.extend([images[-1]] * (nframes - len(images)))
