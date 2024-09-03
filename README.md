@@ -57,6 +57,8 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | TextVQA<sub>val</sub>  | 84.4 | - | - | **85.5** |84.3|79.7
 | OCRBench | 852 | 788 | 736 | **855** |845| 794
 | MTVQA | 17.3 | 25.7 | 27.8 | **32.6** |26.3| 20.0
+| VCR<sub>en easy</sub>  | 84.67 | 63.85 | 91.55 | **91.93** | 89.70| 81.45
+| VCR<sub>zh easy</sub>  | 22.09 | 1.0| 14.87 | **65.37** | 59.94| 46.16
 | RealWorldQA | 72.2 | 60.1 | 75.4 | **77.8** | 70.1| 62.9
 | MME<sub>sum</sub>   | 2414.7 | 1920.0 | 2328.7 | **2482.7** | 2326.8 | 1872.0
 | MMBench-EN<sub>test</sub>  | **86.5** | 79.7 | 83.4 | **86.5** | 83.0 | 74.9
@@ -68,6 +70,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | HallBench<sub>avg</sub>  | 55.2 | 49.9 | 55.0 | **58.1** | 50.6 | 41.7
 | MathVista<sub>testmini</sub>  | 67.5 | 67.7 | 63.8 | **70.5** |58.2| 43.0
 | MathVision  | 16.97 | - | **30.4** | 25.9 | 16.3| 12.4
+
 
 ### Video Benchmarks
 
