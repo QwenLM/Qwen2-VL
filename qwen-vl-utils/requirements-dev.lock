@@ -9,6 +9,8 @@
 #   generate-hashes: false
 
 -e file:.
+av==12.3.0
+    # via qwen-vl-utils
 certifi==2022.12.7
     # via requests
 charset-normalizer==2.1.1
