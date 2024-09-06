@@ -56,7 +56,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | ChartQA<sub>test</sub>  | 88.4 | **90.8** | 85.7 | 88.3 |83.0| 73.5
 | TextVQA<sub>val</sub>  | 84.4 | - | - | **85.5** |84.3|79.7
 | OCRBench | 852 | 788 | 736 | **855** |845| 794
-| MTVQA | 17.3 | 25.7 | 27.8 | **32.6** |26.3| 20.0
+| MTVQA | 17.3 | 25.7 | 27.8 | **30.9** |25.6| 18.1
 | VCR<sub>en easy</sub>  | 84.67 | 63.85 | 91.55 | **91.93** | 89.70| 81.45
 | VCR<sub>zh easy</sub>  | 22.09 | 1.0| 14.87 | **65.37** | 59.94| 46.16
 | RealWorldQA | 72.2 | 60.1 | 75.4 | **77.8** | 70.1| 62.9
@@ -132,7 +132,7 @@ SR, GC, TM and EM are short for success rate, goal-condition success, type match
         <td>15.6 </td>
         <td>17.7 </td>
         <td>41.6 </td>
-        <td><b>32.6</b></td>
+        <td><b>30.9</b></td>
     </tr>
     <tr>
         <th align="left">GPT-4o</th>
