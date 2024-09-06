@@ -57,6 +57,8 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | TextVQA<sub>val</sub>  | 84.4 | - | - | **85.5** |84.3|79.7
 | OCRBench | 852 | 788 | 736 | **855** |845| 794
 | MTVQA | 17.3 | 25.7 | 27.8 | **30.9** |25.6| 18.1
+| VCR<sub>en easy</sub>  | 84.67 | 63.85 | 91.55 | **91.93** | 89.70| 81.45
+| VCR<sub>zh easy</sub>  | 22.09 | 1.0| 14.87 | **65.37** | 59.94| 46.16
 | RealWorldQA | 72.2 | 60.1 | 75.4 | **77.8** | 70.1| 62.9
 | MME<sub>sum</sub>   | 2414.7 | 1920.0 | 2328.7 | **2482.7** | 2326.8 | 1872.0
 | MMBench-EN<sub>test</sub>  | **86.5** | 79.7 | 83.4 | **86.5** | 83.0 | 74.9
@@ -68,6 +70,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 | HallBench<sub>avg</sub>  | 55.2 | 49.9 | 55.0 | **58.1** | 50.6 | 41.7
 | MathVista<sub>testmini</sub>  | 67.5 | 67.7 | 63.8 | **70.5** |58.2| 43.0
 | MathVision  | 16.97 | - | **30.4** | 25.9 | 16.3| 12.4
+
 
 ### Video Benchmarks
 
@@ -389,7 +392,7 @@ messages2 = [
     {"role": "user", "content": "Who are you?"},
 ]
 # Combine messages for batch processing
-messages = [messages1, messages1]
+messages = [messages1, messages2]
 
 # Preparation for batch inference
 texts = [
@@ -804,7 +807,7 @@ from qwen_vl_utils import process_vision_info
 
 # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
 # model = Qwen2VLForConditionalGeneration.from_pretrained(
-#     "Qwen2-VL-7B-Instruct-GPTQ-Int4",
+#     "Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4",
 #     torch_dtype=torch.bfloat16,
 #     attn_implementation="flash_attention_2",
 #     device_map="auto",
@@ -812,14 +815,14 @@ from qwen_vl_utils import process_vision_info
 
 # default: Load the model on the available device(s)
 model = Qwen2VLForConditionalGeneration.from_pretrained(
-    "Qwen2-VL-7B-Instruct-GPTQ-Int4", torch_dtype="auto", device_map="auto"
+    "Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4", torch_dtype="auto", device_map="auto"
 )
 
 # The default range for the number of visual tokens per image in the model is 4-16384. You can set min_pixels and max_pixels according to your needs, such as a token count range of 256-1280, to balance speed and memory usage.
 min_pixels = 256 * 28 * 28
 max_pixels = 1280 * 28 * 28
 processor = AutoProcessor.from_pretrained(
-    "Qwen2-VL-7B-Instruct-GPTQ-Int4", min_pixels=min_pixels, max_pixels=max_pixels
+    "Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4", min_pixels=min_pixels, max_pixels=max_pixels
 )
 
 messages = [
@@ -1173,6 +1176,9 @@ messages = [
         ],
     },
 ]
+# For video input, you can pass following values instead:
+# "type": "video",
+# "video": "<video URL>",
 
 processor = AutoProcessor.from_pretrained(MODEL_PATH)
 prompt = processor.apply_chat_template(

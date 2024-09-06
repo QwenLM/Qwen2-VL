@@ -41,7 +41,7 @@ FROM dev as bundle_req
 RUN pip3 install --no-cache-dir networkx==3.1
 RUN pip3 install --no-cache-dir torch==2.4.0 torchvision==0.19 torchaudio==2.4.0 xformers==0.0.27.post2 --index-url https://download.pytorch.org/whl/cu121
 
-RUN pip3 install --no-cache-dir git+https://github.com/huggingface/transformers@19e6e80e10118f855137b90740936c0b11ac397f  \
+RUN pip3 install --no-cache-dir git+https://github.com/huggingface/transformers@21fac7abba2a37fae86106f87fcf9974fd1e3830  \
     && pip3 install --no-cache-dir accelerate \
     && pip3 install --no-cache-dir qwen-vl-utils
 

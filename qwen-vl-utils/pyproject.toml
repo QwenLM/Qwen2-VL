@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "requests",
     "pillow",
+    "av",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
