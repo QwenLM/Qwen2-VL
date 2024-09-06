@@ -1176,6 +1176,9 @@ messages = [
         ],
     },
 ]
+# For video input, you can pass following values instead:
+# "type": "video",
+# "video": "<video URL>",
 
 processor = AutoProcessor.from_pretrained(MODEL_PATH)
 prompt = processor.apply_chat_template(
