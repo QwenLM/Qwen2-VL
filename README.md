@@ -392,7 +392,7 @@ messages2 = [
     {"role": "user", "content": "Who are you?"},
 ]
 # Combine messages for batch processing
-messages = [messages1, messages1]
+messages = [messages1, messages2]
 
 # Preparation for batch inference
 texts = [
