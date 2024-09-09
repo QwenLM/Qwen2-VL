@@ -994,7 +994,7 @@ This section reports the generation performance of quantized models (including G
 - MMBench_DEV_EN (Accuracy)
 - MathVista_MINI (Accuracy)
 
-We use [VLMEvalkit](https://github.com/kq-chen/VLMEvalKit/tree/add_qwen2vl) to evaluate all models.
+We use [VLMEvalkit](https://github.com/open-compass/VLMEvalKit) to evaluate all models.
 
 | Model Size | Quantization | MMMU | DocVQA | MMBench | MathVista  |
 | --- | --- | --- | --- | --- | --- |
