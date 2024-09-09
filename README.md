@@ -480,7 +480,7 @@ Besides, We provide two methods for fine-grained control over the image size inp
 2. Define min_pixels and max_pixels: Images will be resized to maintain their aspect ratio within the range of min_pixels and max_pixels.
 
 ```python
-# min_pixels and max_pixels
+# resized_height and resized_width
 messages = [
     {
         "role": "user",
@@ -495,7 +495,7 @@ messages = [
         ],
     }
 ]
-# resized_height and resized_width
+# min_pixels and max_pixels
 messages = [
     {
         "role": "user",
