@@ -1144,7 +1144,9 @@ chat_response = client.chat.completions.create(
 print("Chat response:", chat_response)
 ```
 
-**NOTE**: Now `vllm.entrypoints.openai.api_server` does not support set `min_pixels` and `max_pixels` in messages (we are working hard on supporting this feature). If you want to limit the resolution, you can set them in model's `preprocessor_config.json`:
+### Notes
+
+- ⚠️**NOTE**: Now `vllm.entrypoints.openai.api_server` does not support set `min_pixels` and `max_pixels` in messages (we are working hard on supporting this feature). If you want to limit the resolution, you can set them in model's `preprocessor_config.json`:
 
 ```json
 {
@@ -1153,7 +1155,10 @@ print("Chat response:", chat_response)
   ...
 }
 ```
-## Inference Locally
+
+- ⚠️**NOTE**: Now `vllm.entrypoints.openai.api_server` does not support video input yet. We are actively developing on it.
+- ⚠️**NOTE**: If you want to pass multiple images in a single prompt, you need to pass `--limit-mm-per-prompt image=<N>` argument (`N` is max number of images in each prompt) when launching `vllm.entrypoints.openai.api_server`.
+### Inference Locally
 
 You can also use vLLM to inference Qwen2-VL locally:
 
