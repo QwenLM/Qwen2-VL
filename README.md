@@ -183,13 +183,14 @@ Below, we provide simple examples to show how to use Qwen2-VL with 🤖 ModelSco
 
 The code of Qwen2-VL has been in the latest Hugging face transformers and we advise you to build from source with command:
 ```
-pip install git+https://github.com/huggingface/transformers accelerate
+pip install git+https://github.com/huggingface/transformers@21fac7abba2a37fae86106f87fcf9974fd1e3830 accelerate
 ```
 or you might encounter the following error:
 ```
 KeyError: 'qwen2_vl'
 ```
 
+- ⚠️**NOTE**: Current latest version of `transformers` have [a bug](https://github.com/huggingface/transformers/issues/33401) when loading Qwen2-VL config, so you need to install a specific version of transformers as above.
 
 We offer a toolkit to help you handle various types of visual input more conveniently, as if you were using an API. This includes base64, URLs, and interleaved images and videos. You can install it using the following command:
 
@@ -1071,7 +1072,21 @@ Note:
 
 ## Deployment
 
-We recommend using vLLM for fast Qwen2-VL deployment and inference. You can use [this fork](https://github.com/fyabc/vllm/tree/add_qwen2_vl_new) (we are working on merging this PR into vLLM main repository).
+We recommend using vLLM for fast Qwen2-VL deployment and inference. You can use [this fork](https://github.com/fyabc/vllm/tree/add_qwen2_vl_new) (we are working on merging this PR into vLLM main repository). You can also use our [official docker image](#-docker).
+
+### Installation
+```bash
+pip install git+https://github.com/huggingface/transformers@21fac7abba2a37fae86106f87fcf9974fd1e3830
+pip install accelerate
+pip install qwen-vl-utils
+git clone https://github.com/fyabc/vllm
+cd vllm
+git checkout add_qwen2_vl_new
+# Change to your CUDA version
+CUDA_VERSION=cu121
+pip install . --index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+```
+### Start an OpenAI API Service
 
 Run the command below to start an OpenAI-compatible API service:
 
@@ -1138,6 +1153,7 @@ print("Chat response:", chat_response)
   ...
 }
 ```
+## Inference Locally
 
 You can also use vLLM to inference Qwen2-VL locally:
 
