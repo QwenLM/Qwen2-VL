@@ -1072,19 +1072,16 @@ Note:
 
 ## Deployment
 
-We recommend using vLLM for fast Qwen2-VL deployment and inference. You can use [this fork](https://github.com/fyabc/vllm/tree/add_qwen2_vl_new) (we are working on merging this PR into vLLM main repository). You can also use our [official docker image](#-docker).
+We recommend using vLLM for fast Qwen2-VL deployment and inference. You need to use `vllm>=0.6.1` to enable Qwen2-VL support. You can also use our [official docker image](#-docker).
 
 ### Installation
 ```bash
 pip install git+https://github.com/huggingface/transformers@21fac7abba2a37fae86106f87fcf9974fd1e3830
 pip install accelerate
 pip install qwen-vl-utils
-git clone https://github.com/fyabc/vllm
-cd vllm
-git checkout add_qwen2_vl_new
 # Change to your CUDA version
 CUDA_VERSION=cu121
-pip install . --index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+pip install 'vllm==0.6.1' --index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 ```
 ### Start an OpenAI API Service
 
