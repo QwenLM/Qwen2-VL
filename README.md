@@ -1084,7 +1084,7 @@ cd vllm
 git checkout add_qwen2_vl_new
 # Change to your CUDA version
 CUDA_VERSION=cu121
-pip install . --index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+pip install . --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 ```
 ### Start an OpenAI API Service
 
