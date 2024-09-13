@@ -1368,7 +1368,7 @@ hyperparameters. One argument to note is ``cutoff_len``, which is the
 maximum length of the training data. Control this parameter to avoid OOM
 error.
 
-For finetuning Qwen2-VL, in case you prefer a lightweight way, e.g. you would like to write your own "train loop". Here is an alternative repo for reference: [Qwen2-VL-Finetuning](https://github.com/zhangfaen/finetune-Qwen2-VL) . The are about 200 lines of effective code for preparing dataset, dataloader, train loop, etc. It is simple and straight forward. 
+**Note:** For finetuning Qwen2-VL, in case you prefer a lightweight way, e.g. you would like to write your own "train loop". Here is an alternative repo for reference: [Qwen2-VL-Finetuning](https://github.com/zhangfaen/finetune-Qwen2-VL) . There are about 200 lines of effective code for preparing dataset, dataloader, train loop, etc. It is simple and straight forward. It supports flash_attention2 and distributed training.
 
 ## Function Calling
 
