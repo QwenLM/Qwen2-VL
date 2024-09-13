@@ -1081,7 +1081,8 @@ pip install accelerate
 pip install qwen-vl-utils
 # Change to your CUDA version
 CUDA_VERSION=cu121
-pip install 'vllm==0.6.1' --index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+pip install 'vllm==0.6.1' --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+
 ```
 ### Start an OpenAI API Service
 
