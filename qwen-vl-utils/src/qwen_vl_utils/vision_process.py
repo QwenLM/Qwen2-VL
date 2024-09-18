@@ -82,9 +82,9 @@ def fetch_image(ele: dict[str, str | Image.Image], size_factor: int = IMAGE_FACT
     elif image.startswith("file://"):
         image_obj = Image.open(image[7:])
     elif image.startswith("data:image"):
-        data = image.split(";", 1)[1]
-        if data.startswith("base64,"):
-            data = base64.b64decode(data[7:])
+        if "base64," in image:
+            _, base64_data = image.split("base64,", 1)
+            data = base64.b64decode(base64_data)
             image_obj = Image.open(BytesIO(data))
     else:
         image_obj = Image.open(image)
