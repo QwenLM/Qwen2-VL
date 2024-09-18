@@ -1501,6 +1501,24 @@ Running on local: http://127.0.0.1:7860/
 
 Copy this link and paste it into your browser to access the web UI, where you can interact with the model by inputting text, uploading images, or using any other provided functionalities.
 
+##### Running the Streaming Video Chat Demo
+An experimental streaming video chat demo is also available in the ``web_demo_streaming`` directory.
+
+To run the streaming video chat demo, use the following command:
+
+```bash
+cd web_demo_streaming/
+python app.py --flash-attn2
+```
+
+If you prefer to run the demo without FlashAttention-2, use the following command:
+```bash
+cd web_demo_streaming/
+python app.py
+```
+
+This demo supports webcam/screen capture as its video input source. To support screen capture video input, we use code snippet from the following hugginface space: [gstaff/gradio-screen-recorder](https://huggingface.co/spaces/gstaff/gradio-screen-recorder/tree/main).
+
 #### Selecting Different Models (Qwen2-VL Series Only)
 
 The demo is configured by default to use the `Qwen/Qwen2-VL-7B-Instruct` model, which is part of the Qwen2-VL series and is well-suited for various vision-language tasks. However, if you want to use a different model within the Qwen2-VL series, you can simply update the `DEFAULT_CKPT_PATH` variable in the script:
