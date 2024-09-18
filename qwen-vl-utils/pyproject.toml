@@ -1,6 +1,6 @@
 [project]
 name = "qwen-vl-utils"
-version = "0.0.4"
+version = "0.0.5"
 description = "Qwen Vision Language Model Utils - PyTorch"
 authors = [
     { name = "Qwen Team", email = "chenkeqin.ckq@alibaba-inc.com" },
@@ -23,7 +23,7 @@ classifiers = [
     'Development Status :: 4 - Beta',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
     'Programming Language :: Python :: 3',
-    'License :: OSI Approved :: MIT License',
+    'License :: OSI Approved :: Apache Software License',
 ]
 
 [project.urls]
