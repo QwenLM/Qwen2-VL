@@ -40,22 +40,25 @@ After a year's relentless efforts, today we are thrilled to release **Qwen2-VL**
 <p>
 
 
-We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we release the [API](https://help.aliyun.com/zh/model-studio/developer-reference/qwen-vl-api) of Qwen2-VL-72B! The opensource is integrated to Hugging Face Transformers, vLLM, and other third-party frameworks. Hope you enjoy!
+We have open-sourced Qwen2-VL models, including Qwen2-VL-2B and Qwen2-VL-7B under the Apache 2.0 license, as well as Qwen2-VL-72B under the Qwen license. These models are now integrated with Hugging Face Transformers, vLLM, and other third-party frameworks. We hope you enjoy using them!
+
+
 ## News
+* 2024.09.19: The instruction-tuned [Qwen2-VL-72B model](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct) and its quantized version [[AWQ](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-AWQ), [GPTQ-Int4](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-GPTQ-Int4), [GPTQ-Int8](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-GPTQ-Int8)] are now available.
 * 2024.08.30: We have released the [Qwen2-VL series]("https://huggingface.co/collections/Qwen/qwen2-vl-66cee7455501d7126940800d). The 2B and 7B models are now available, and the 72B model for opensource is coming soon. For more details, please check our [blog](https://qwenlm.github.io/blog/qwen2-vl/)!
 
 
 ## Performance
 ### Image Benchmarks
 
-| Benchmark | Previous SoTA<br><sup>(Open-source LVLM)<sup> | Claude-3.5 Sonnet | GPT-4o | **Qwen2-VL-72B**<br><sup>(Coming soon) |**Qwen2-VL-7B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) |**Qwen2-VL-2B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) 
+| Benchmark | Previous SoTA<br><sup>(Open-source LVLM)<sup> | Claude-3.5 Sonnet | GPT-4o | **Qwen2-VL-72B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct) |**Qwen2-VL-7B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) |**Qwen2-VL-2B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) 
 | :--- | :---: | :---: | :---: | :---: |:---: |:---: |
 | MMMU<sub>val</sub>  | 58.3 | 68.3 | **69.1** | 64.5 | 54.1|41.1
 | DocVQA<sub>test</sub>  | 94.1 | 95.2 | 92.8 | **96.5** | 94.5| 90.1
 | InfoVQA<sub>test</sub>  | 82.0 | - | - | **84.5** | 76.5|65.5
 | ChartQA<sub>test</sub>  | 88.4 | **90.8** | 85.7 | 88.3 |83.0| 73.5
 | TextVQA<sub>val</sub>  | 84.4 | - | - | **85.5** |84.3|79.7
-| OCRBench | 852 | 788 | 736 | **855** |845| 794
+| OCRBench | 852 | 788 | 736 | **877** |845| 794
 | MTVQA | 17.3 | 25.7 | 27.8 | **30.9** |25.6| 18.1
 | VCR<sub>en easy</sub>  | 84.67 | 63.85 | 91.55 | **91.93** | 89.70| 81.45
 | VCR<sub>zh easy</sub>  | 22.09 | 1.0| 14.87 | **65.37** | 59.94| 46.16
@@ -74,7 +77,7 @@ We opensourced Qwen2-VL-2B and Qwen2-VL-7B with Apache 2.0 license, and we relea
 
 ### Video Benchmarks
 
-| Benchmark |  Previous SoTA<br><sup>(Open-source LVLM)<sup> | Gemini 1.5-Pro | GPT-4o | **Qwen2-VL-72B**<br><sup>(Coming soon) |**Qwen2-VL-7B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) |**Qwen2-VL-2B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) 
+| Benchmark |  Previous SoTA<br><sup>(Open-source LVLM)<sup> | Gemini 1.5-Pro | GPT-4o | **Qwen2-VL-72B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct)) |**Qwen2-VL-7B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) |**Qwen2-VL-2B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) 
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | MVBench | 69.6 | - | - | **73.6** | 67.0| 63.2 
 | PerceptionTest<sub>test</sub> |  66.9 | - | - | **68.0** | 62.3 |53.9
@@ -999,14 +1002,21 @@ We use [VLMEvalkit](https://github.com/open-compass/VLMEvalKit) to evaluate all 
 
 | Model Size | Quantization | MMMU | DocVQA | MMBench | MathVista  |
 | --- | --- | --- | --- | --- | --- |
+| Qwen2-VL-72B-Instruct | BF16<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct)) | 65.44 | 95.79 | 86.94 | 70.19 |
+|  | GPTQ-Int8<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-GPTQ-Int8)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct-GPTQ-Int8)) | 64.56 | 95.84 | 87.03 | 68.90 |
+|  | GPTQ-Int4<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-GPTQ-Int4)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct-GPTQ-Int4)) | 64.00 | 95.70 | 86.68 | 69.20 |
+|  | AWQ<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct-AWQ)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct-AWQ)) | 64.22 | 95.72 | 86.43 | 68.40 |
 | Qwen2-VL-7B-Instruct | BF16<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) | 53.77 | 93.89 | 81.78 | 58.20 |
 |  | GPTQ-Int8<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int8)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct-GPTQ-Int8)) | 53.00 | 93.94 | 82.38 | 57.90 |
 |  | GPTQ-Int4<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct-GPTQ-Int4)) | 52.55 | 93.16 | 81.27 | 60.30 |
 |  | AWQ<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct-AWQ)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct-AWQ)) | 53.66 | 93.10 | 81.61 | 56.80 |
- Qwen2-VL-2B-Instruct | BF16<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) | 41.88 | 88.34 | 72.07 | 44.40 |
+| Qwen2-VL-2B-Instruct | BF16<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) | 41.88 | 88.34 | 72.07 | 44.40 |
 |  | GPTQ-Int8<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct-GPTQ-Int8)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct-GPTQ-Int8)) | 41.55 |  88.28 | 71.99 | 44.60 |
 |  | GPTQ-Int4<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct-GPTQ-Int4)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct-GPTQ-Int4)) | 39.22 | 87.21 | 70.87 | 41.69 |
 |  | AWQ<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct-AWQ)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct-AWQ)) | 41.33 | 86.96 | 71.64 | 39.90 |
+
+
+
 
 
 
@@ -1027,6 +1037,27 @@ Note:
 
 - We use the batch size of 1 and the least number of GPUs as possible for the evalution.
 - We test the speed and memory of generating 2048 tokens with the input lengths of 1, 6144, 14336, 30720, 63488, and 129024 tokens.
+- 72B (transformers)
+
+| Model | Input Length | Quantization | GPU Num | Speed(tokens/s) | GPU Memory(GB) |
+| --- | --- | --- | --- | --- | --- |
+| Qwen2-VL-72B-Instruct | 1 | BF16 | 2 | 8.90 | 138.74 |
+|  |  | GPTQ-Int8 | 2 | 9.53 | 75.173 |
+|  |  | GPTQ-Int4 | 1 | 11.04 | 42.46 |
+|  |  | AWQ | 1 | 12.00 | 41.98 |
+|  | 6144 | BF16 | 2 | 6.53 | 148.66 |
+|  |  | GPTQ-Int8 | 2 | 6.97 | 85.09 |
+|  |  | GPTQ-Int4 | 1 | 7.62 | 49.05 |
+|  |  | AWQ | 1 | 8.33 | 48.58 |
+|  | 14336 | BF16 | 3 | 4.39 | 165.92 |
+|  |  | GPTQ-Int8 | 2 | 5.04 | 99.31 |
+|  |  | GPTQ-Int4 | 1 | 5.39 | 58.76 |
+|  |  | AWQ | 1 | 5.72 | 58.29 |
+|  | 30720 | BF16 | 4 | 2.93 | 204.33 |
+|  |  | GPTQ-Int8 | 2 | 3.16 | 127.77 |
+|  |  | GPTQ-Int4 | 2 | 3.27 | 85.13 |
+|  |  | AWQ | 2 | 3.39 | 94.65 |
+
 - 7B (transformers)
 
 | Model | Input Length | Quantization | GPU Num | Speed(tokens/s) | GPU Memory(GB) |
@@ -1069,6 +1100,8 @@ Note:
 |  |  | GPTQ-Int8 | 1 | 27.76 | 30.51 |
 |  |  | GPTQ-Int4 | 1 | 30.73 | 29.84 |
 |  |  | AWQ | 1 | 31.55 | 29.84 |
+
+
 
 ## Deployment
 
