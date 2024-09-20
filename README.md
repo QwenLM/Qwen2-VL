@@ -1155,7 +1155,7 @@ client = OpenAI(
 )
 
 chat_response = client.chat.completions.create(
-    model="Qwen2-7B-Instruct",
+    model="Qwen2-VL-7B-Instruct",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {
