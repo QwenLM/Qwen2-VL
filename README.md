@@ -1611,12 +1611,11 @@ If you find our paper and code useful in your research, please consider giving a
 
 
 ```BibTeX
-@article{Qwen2-VL,
-      title={Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution}, 
-      author={Peng Wang and Shuai Bai and Sinan Tan and Shijie Wang and Zhihao Fan and Jinze Bai and Keqin Chen and Xuejing Liu and Jialin Wang and Wenbin Ge and Yang Fan and Kai Dang and Mengfei Du and Xuancheng Ren and Rui Men and Dayiheng Liu and Chang Zhou and Jingren Zhou and Junyang Lin},
-      year={2024},
-      eprint={2409.12191},
-      url={https://arxiv.org/abs/2409.12191}, 
+@article{Qwen2VL,
+  title={Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution},
+  author={Wang, Peng and Bai, Shuai and Tan, Sinan and Wang, Shijie and Fan, Zhihao and Bai, Jinze and Chen, Keqin and Liu, Xuejing and Wang, Jialin and Ge, Wenbin and Fan, Yang and Dang, Kai and Du, Mengfei and Ren, Xuancheng and Men, Rui and Liu, Dayiheng and Zhou, Chang and Zhou, Jingren and Lin, Junyang},
+  journal={arXiv preprint arXiv:2409.12191},
+  year={2024}
 }
 
 @article{Qwen-VL,
