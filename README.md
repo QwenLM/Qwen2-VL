@@ -198,8 +198,11 @@ KeyError: 'qwen2_vl'
 We offer a toolkit to help you handle various types of visual input more conveniently, as if you were using an API. This includes base64, URLs, and interleaved images and videos. You can install it using the following command:
 
 ```bash
-pip install qwen-vl-utils
+# It's highly recommanded to use `[decord]` feature for faster video loading.
+pip install qwen-vl-utils[decord]
 ```
+
+If you are not using Linux, you might not be able to install `decord` from PyPI. In that case, you can use `pip install qwen-vl-utils` which will fall back to using torchvision for video processing. However, you can still [install decord from source](https://github.com/dmlc/decord?tab=readme-ov-file#install-from-source) to get decord used when loading video.
 
 ### Using 🤗  Transformers to Chat
 
