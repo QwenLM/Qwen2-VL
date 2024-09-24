@@ -31,6 +31,11 @@ Homepage = "https://github.com/QwenLM/Qwen2-VL/tree/main/qwen-vl-utils"
 Repository = "https://github.com/QwenLM/Qwen2-VL.git"
 Issues = "https://github.com/QwenLM/Qwen2-VL/issues"
 
+[project.optional-dependencies]
+decord = [
+    "decord",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
