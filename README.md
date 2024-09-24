@@ -330,14 +330,13 @@ messages = [
                     "file:///path/to/frame3.jpg",
                     "file:///path/to/frame4.jpg",
                 ],
-                "fps": 1.0,
             },
             {"type": "text", "text": "Describe this video."},
         ],
     }
 ]
 
-# Messages containing a video and a text query
+# Messages containing a local video path and a text query
 messages = [
     {
         "role": "user",
@@ -347,6 +346,20 @@ messages = [
                 "video": "file:///path/to/video1.mp4",
                 "max_pixels": 360 * 420,
                 "fps": 1.0,
+            },
+            {"type": "text", "text": "Describe this video."},
+        ],
+    }
+]
+
+# Messages containing a video url and a text query
+messages = [
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "video",
+                "video": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-VL/space_woaudio.mp4",
             },
             {"type": "text", "text": "Describe this video."},
         ],
@@ -377,6 +390,14 @@ output_text = processor.batch_decode(
 )
 print(output_text)
 ```
+
+Video URL compatibility largely depends on the third-party library version. The details are in the table below. change the backend by `FORCE_QWENVL_VIDEO_READER=torchvision` or `FORCE_QWENVL_VIDEO_READER=decord` if you prefer not to use the default one.
+
+| Backend     | HTTP | HTTPS |
+|-------------|------|-------|
+| torchvision >= 0.19.0 | ✅  | ✅   |
+| torchvision < 0.19.0  | ❌  | ❌   |
+| decord      | ✅  | ❌   |
 </details>
 
 <details>
