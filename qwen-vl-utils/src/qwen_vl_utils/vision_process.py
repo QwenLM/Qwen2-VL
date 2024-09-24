@@ -177,7 +177,7 @@ def _read_video_torchvision(
         torch.Tensor: the video tensor with shape (T, C, H, W).
     """
     video_path = ele["video"]
-    if version(torchvision.__version__) < version.parse("0.19.0"):
+    if version.parse(torchvision.__version__) < version.parse("0.19.0"):
         if "http://" in video_path or "https://" in video_path:
             warnings.warn("torchvision < 0.19.0 does not support http/https video path, please upgrade to 0.19.0.")
         if "file://" in video_path:
