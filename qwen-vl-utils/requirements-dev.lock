@@ -64,6 +64,8 @@ nvidia-nvjitlink-cu12==12.6.68
     # via nvidia-cusparse-cu12
 nvidia-nvtx-cu12==12.1.105
     # via torch
+packaging==24.1
+    # via qwen-vl-utils
 pillow==10.2.0
     # via qwen-vl-utils
     # via torchvision

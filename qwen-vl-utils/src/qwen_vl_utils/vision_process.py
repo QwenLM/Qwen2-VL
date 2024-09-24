@@ -6,11 +6,14 @@ import math
 import os
 import sys
 import time
+import warnings
 from functools import lru_cache
 from io import BytesIO
 
 import requests
 import torch
+import torchvision
+from packaging import version
 from PIL import Image
 from torchvision import io, transforms
 from torchvision.transforms import InterpolationMode
@@ -174,6 +177,11 @@ def _read_video_torchvision(
         torch.Tensor: the video tensor with shape (T, C, H, W).
     """
     video_path = ele["video"]
+    if version(torchvision.__version__) < version.parse("0.19.0"):
+        if "http://" in video_path or "https://" in video_path:
+            warnings.warn("torchvision < 0.19.0 does not support http/https video path, please upgrade to 0.19.0.")
+        if "file://" in video_path:
+            video_path = video_path[7:]
     st = time.time()
     video, audio, info = io.read_video(
         video_path,

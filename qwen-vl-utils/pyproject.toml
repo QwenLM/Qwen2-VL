@@ -9,6 +9,7 @@ dependencies = [
     "requests",
     "pillow",
     "av",
+    "packaging",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
