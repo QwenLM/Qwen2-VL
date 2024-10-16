@@ -613,7 +613,7 @@ model = Qwen2VLForConditionalGeneration.from_pretrained(
 ```
 
 ### Multi-turn Conversation
-There is an easy way to use Qwen2-VL for multi-turn conversation which supports pure text, single image, multi-images. You can use it as follows:
+There is an easy way to use Qwen2-VL for multi-turn conversations which supports pure text, single image, multi-images. You can use it as follows:
 
 First copy the class `Qwen2VL`.
 ```python
@@ -676,7 +676,7 @@ class Qwen2VL:
         gc.collect()
         return response, history
 ```
-Then use the `chat` API in `Qwen2VL` class.
+Then use the `chat` API in `Qwen2VL` class, `query` parameter is the user query in natural language format, `imgs` parameter is the image url or path or base64, `history` parameter is the history of the conversation.
 ```python
 chat_model = Qwen2VL(model_path="local path/repo id")
 
