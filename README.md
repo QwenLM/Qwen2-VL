@@ -56,7 +56,7 @@ We have open-sourced Qwen2-VL models, including Qwen2-VL-2B and Qwen2-VL-7B unde
 | Benchmark | Previous SoTA<br><sup>(Open-source LVLM)<sup> | Claude-3.5 Sonnet | GPT-4o | **Qwen2-VL-72B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-72B-Instruct) |**Qwen2-VL-7B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct) [🤖](https://modelscope.cn/models/qwen/Qwen2-VL-7B-Instruct)) |**Qwen2-VL-2B**<br><sup>([🤗](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)[🤖](https://modelscope.cn/models/qwen/Qwen2-VL-2B-Instruct)) 
 | :--- | :---: | :---: | :---: | :---: |:---: |:---: |
 | MMMU<sub>val</sub>  | 58.3 | 68.3 | **69.1** | 64.5 | 54.1|41.1
-| MMMU-Pro | 46.9 | 51.5 | **51.9** | 46.2 | 30.5 | 20.2 
+| MMMU-Pro | 46.9 | 51.5 | **51.9** | 46.2 | 30.5 | 21.2 
 | DocVQA<sub>test</sub>  | 94.1 | 95.2 | 92.8 | **96.5** | 94.5| 90.1
 | InfoVQA<sub>test</sub>  | 82.0 | - | - | **84.5** | 76.5|65.5
 | ChartQA<sub>test</sub>  | 88.4 | **90.8** | 85.7 | 88.3 |83.0| 73.5
