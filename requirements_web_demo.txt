@@ -1,6 +1,6 @@
 # Core dependencies
-gradio==4.42.0
-gradio_client==1.3.0
+gradio==5.4.0
+gradio_client==1.4.2
 qwen-vl-utils==0.0.2
 transformers-stream-generator==0.0.4
 torch==2.4.0
